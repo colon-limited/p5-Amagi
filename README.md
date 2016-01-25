@@ -10,15 +10,15 @@ In your api class,
     use Amagi;
     my $config = +{ name => 'MyApp' };
     my $dbh = ...;
-    
+     
     amagi_init $config;
     add_component DB => $dbh;
-    
+     
     get '/' => sub {
         my ($app, $req) = @_;
         {message => 'Hello, Amagi!'};
     };
-    
+     
     post '/item/:id' => sub {
         my ($app, $req) = @_;
         my $item_id = $req->captured->{id} or return $app->res_error(400, 'bad request');
@@ -28,7 +28,7 @@ In your api class,
         $sth->finish;
         {new_name => $new_name};
     };
-    
+     
     1;
 
 then, your psgi file,
