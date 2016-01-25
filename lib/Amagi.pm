@@ -53,7 +53,6 @@ In your api class,
 
     package MyApp::API;
     use Amagi;
-    
     my $config = +{ name => 'MyApp' };
     my $dbh = ...;
     
@@ -76,6 +75,7 @@ In your api class,
     };
     
     1;
+
 
 then, your psgi file,
 

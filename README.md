@@ -8,7 +8,6 @@ In your api class,
 
     package MyApp::API;
     use Amagi;
-    
     my $config = +{ name => 'MyApp' };
     my $dbh = ...;
     
