@@ -27,6 +27,9 @@ $amagi->post('/member/:id', sub {
         calc    => $app->component('BlackBox')->($id),
     };
 });
+$amagi->get('/err', sub {
+    die 'my error';
+});
 
 my $test = Plack::Test->create($amagi->app);
 
@@ -51,6 +54,12 @@ subtest '404 case' => sub {
     like $res->content, qr/"status":404/;
     is $res->header('Content-type'), 'application/json; charset=utf-8';
     is $res->header('Content-length'), '36';
+};
+
+subtest '500 case' => sub {
+    my $res = $test->request(GET '/err');
+    is $res->code, 500;
+    like $res->content, qr/"message":"Internal Server Error : my error/;
 };
 
 done_testing;

@@ -53,7 +53,10 @@ sub dispatch {
     $req->{captured} = $captured;
     my $code = $self->controller->{$action_id}{lc($req->method)} or return $self->res_error(404, 'Not Found');
 
-    my $res_data = $code->($self, $req) or return $self->res_error(500, 'Void Response');
+    my $res_data = eval { $code->($self, $req) };
+    if ($@) {
+        return $self->res_error(500, 'Internal Server Error : '. $@);
+    }
     Amagi::Response->as_json($res_data);
 }
 
