@@ -3,6 +3,8 @@ use warnings;
 use Test::More;
 use Plack::Test;
 use HTTP::Request::Common;
+use HTTP::Headers;
+use JSON ();
 use Amagi::Core;
 
 my $config = {appname => 'MyTest'};
@@ -18,7 +20,11 @@ $amagi->get('/', sub {
     my ($app, $req) = @_;
     {message => 'yay!', appname => $app->config->{appname}};
 });
-$amagi->post('/member/:id', sub {
+$amagi->post('/member/add', sub {
+    my ($app, $req) = @_;
+    { member => $req->json_content };
+});
+$amagi->post('/member/{id:[0-9]+}', sub {
     my ($app, $req) = @_;
     my $id = $req->captured->{id};
     {
@@ -60,6 +66,15 @@ subtest '500 case' => sub {
     my $res = $test->request(GET '/err');
     is $res->code, 500;
     like $res->content, qr/"message":"Internal Server Error : my error/;
+};
+
+subtest 'json request' => sub {
+    my $member = {name => 'ytnobody', id => 30};
+    my $post_data = JSON->new->utf8(1)->encode($member);
+    my $res = $test->request(POST '/member/add', Content_Type => 'application/json', Content => $post_data);
+    is $res->code, 200;
+    my $json_res = JSON->new->utf8(1)->decode($res->content);
+    is_deeply $json_res->{member}, $member;
 };
 
 done_testing;

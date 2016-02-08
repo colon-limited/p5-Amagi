@@ -64,7 +64,7 @@ In your api class,
         {message => 'Hello, Amagi!'};
     };
      
-    post '/item/:id' => sub {
+    post '/item/{id:[0-9]+}' => sub {
         my ($app, $req) = @_;
         my $item_id = $req->captured->{id} or return $app->res_error(400, 'bad request');
         my $new_name = $req->param('name');
@@ -72,6 +72,15 @@ In your api class,
         $sth->execute($new_name, $item_id);
         $sth->finish;
         {new_name => $new_name};
+    };
+
+    put '/member/' => sub {
+        my ($app, $req) = @_;
+        my $json_data = $req->json_content or return $app->res_error(400 => 'Bad Request');
+        my $sth = $app->component('DB')->prepare('INSERT INTO member (`name`, `age`) VALUES (?, ?)');
+        $sth->execute($json_data->{name}, $json_data->{age});
+        $sth->finish;
+        {message => 'registered'};
     };
      
     1;
