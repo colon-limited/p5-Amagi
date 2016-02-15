@@ -22,3 +22,29 @@ sub as_json {
 }
 
 1;
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+Amagi::Response - Amagi Response Class
+
+=head1 METHOD
+
+=head2 as_json
+
+Returns a finalized response that contains a json string that is encoded from passed hashref/arrayref .
+
+=head1 LICENSE
+
+Copyright (C) COLON Company Limited.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=head1 AUTHOR
+
+ytnobody E<lt>ytnobody@gmail.comE<gt>
+
+=cut

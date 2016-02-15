@@ -84,3 +84,86 @@ sub app {
 }
 
 1;
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+Amagi::Core - Amagi Core Class
+
+=head1 SYNOPSIS
+
+In your psgi file.
+
+    use Amagi::Core;
+    my $amagi = Amagi::Core->new(config => {appname => 'OreApp'});
+    $amagi->get('/' => sub { 
+        +{ appname => shift->config->{appname} } 
+    } );
+    $amagi->app;
+
+=head1 ATTRIBUTE
+
+=head2 config (HASHREF)
+
+=head1 METHOD
+
+=head2 get / post / put / delete
+
+Add controller logic to router.
+
+First argument is a path string, that specifies in L<lt>Router::Boom<gt> style.
+
+Second argument is a code reference for controller logic.
+
+    $amagi->get('/item/{id:[0-9]+}' => sub {
+        my ($app, $req) = @_;
+        ...
+        +{ keyname => $value };
+    });
+
+=head2 res_error
+
+Return L<lt>Amagi::Response<gt> object that contains passed status code and message.
+
+    $amagi->post('/item/{id:[0-9]+}' => sub {
+        my ($app, $req) = @_;
+        return $app->res_error(400 => 'commit parameter is not defined') if !$req->param('commit');
+        {message => 'ok'}
+    });
+
+=head1 CONTROLLER LOGIC
+
+=head2 INCOMMING ARGUMENTS
+
+Controller logic is passed 2 arguments.
+
+First argument is an L<lt>Amagi::Core<gt> object.
+
+Second argument is an L<lt>Amagi::Request<gt> object.
+
+    $amagi->get('/' => sub {
+        my ($app, $req) = @_;
+        ### $app is an Amagi::Core object. $req is an Amagi::Request object.
+        ...
+    });
+
+=head2 RESPONSE 
+
+Controller logic must return hashref object.
+
+=head1 LICENSE
+
+Copyright (C) COLON Company Limited.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=head1 AUTHOR
+
+ytnobody E<lt>ytnobody@gmail.comE<gt>
+
+=cut
+
+

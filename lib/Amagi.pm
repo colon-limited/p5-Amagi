@@ -97,7 +97,7 @@ Amagi is a minimalist JSON API Framework.
 
 =head1 LICENSE
 
-Copyright (C) ytnobody.
+Copyright (C) COLON Company Limited.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
