@@ -2,6 +2,12 @@
 
 Amagi - JSON API Framework
 
+<div>
+    <a href='https://travis-ci.org/colon-limited/p5-Amagi'><img src='https://travis-ci.org/colon-limited/p5-Amagi.svg?branch=master' alt='Travis CI Status' /></a>
+
+    <a href='https://coveralls.io/github/colon-limited/p5-Amagi?branch=master'><img src='https://coveralls.io/repos/github/colon-limited/p5-Amagi/badge.svg?branch=master' alt='Coverage Status' /></a>
+</div>
+
 # SYNOPSIS
 
 In your api class,
