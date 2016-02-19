@@ -4,7 +4,7 @@ use warnings;
 use parent 'Plack::Response';
 use JSON;
 
-our $serializer = JSON->new->utf8(1);
+our $serializer = JSON->new->canonical->utf8(1);
 
 sub as_json {
     my ($class, $data) = @_;
