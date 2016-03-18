@@ -46,6 +46,7 @@
             "Digest::SHA" : "0",
             "JSON" : "0",
             "Plack" : "0",
+            "Plack::Request::WithEncoding" : "0",
             "Router::Boom" : "0",
             "perl" : "5.008001"
          }

@@ -1,7 +1,7 @@
 package Amagi::Request;
 use strict;
 use warnings;
-use parent 'Plack::Request';
+use parent 'Plack::Request::WithEncoding';
 use JSON;
 use Carp ();
 

@@ -1,6 +1,7 @@
 requires 'perl', '5.008001';
 requires 'Router::Boom';
 requires 'Plack';
+requires 'Plack::Request::WithEncoding';
 requires 'JSON';
 requires 'Class::Accessor::Lite';
 requires 'Digest::SHA';
