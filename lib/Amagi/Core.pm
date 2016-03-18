@@ -49,7 +49,8 @@ sub add {
 sub dispatch {
     my ($self, $env) = @_;
     my $req = Amagi::Request->new($env);
-    my ($action_id, $captured) = $self->router->match($req->path) or return $self->res_error(404, 'Not Found');
+    my ($action_id, $captured) = $self->router->match($req->path);
+    return $self->res_error(404, 'Not Found') unless $action_id;
     $req->{captured} = $captured;
     my $code = $self->controller->{$action_id}{lc($req->method)} or return $self->res_error(404, 'Not Found');
 
