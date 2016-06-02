@@ -60,8 +60,14 @@
    },
    "release_status" : "unstable",
    "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/colon-limited/p5-Amagi/issues"
+      },
+      "homepage" : "https://github.com/colon-limited/p5-Amagi",
       "repository" : {
-         "url" : "ssh://sazuma@git.550909.biz:29418/colontokyoweb/amagi.git"
+         "type" : "git",
+         "url" : "git://github.com/colon-limited/p5-Amagi.git",
+         "web" : "https://github.com/colon-limited/p5-Amagi"
       }
    },
    "version" : "0.01",
