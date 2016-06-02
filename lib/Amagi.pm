@@ -15,16 +15,17 @@ sub amagi_init (;$) {
 }
 
 sub amagi () {
+    $AMAGI_INSTANCE ||= Amagi::Core->new;
     $AMAGI_INSTANCE;
 }
 
 sub app () {
-    $AMAGI_INSTANCE->app;
+    amagi->app;
 }
 
 sub add_component ($$) {
     my ($name, $object) = @_;
-    $AMAGI_INSTANCE->add_component($name, $object);
+    amagi->add_component($name, $object);
 }
 
 {
@@ -33,7 +34,7 @@ sub add_component ($$) {
     for my $method (qw/get post put delete/) {
         *{__PACKAGE__.'::'.$method} = sub ($$) {
             my ($path, $code) = @_;
-            $AMAGI_INSTANCE->add(method => $method, path => $path, code => $code);
+            amagi->add(method => $method, path => $path, code => $code);
         };
     }
 }
