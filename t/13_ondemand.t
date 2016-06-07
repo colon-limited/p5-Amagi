@@ -28,6 +28,16 @@ use HTTP::Request::Common;
         };
     };
 
+    get '/mv' => sub {
+        my ($app, $req) = @_;
+        return $app->redirect('/');
+    };
+
+    get '/mv_perm' => sub {
+        my ($app, $req) = @_;
+        return $app->redirect_permanently('/');
+    };
+
     no Amagi;
     1;
 };
@@ -60,6 +70,18 @@ subtest '404 case' => sub {
     like $res->content, qr/"status":404/;
     is $res->header('Content-type'), 'application/json; charset=utf-8';
     is $res->header('Content-length'), '36';
+};
+
+subtest 'redirect' => sub {
+    my $res = $test->request(GET '/mv');
+    is $res->code, 307;
+    is $res->header('Location'), '/';
+};
+
+subtest 'redirect_permanently' => sub {
+    my $res = $test->request(GET '/mv_perm');
+    is $res->code, 308;
+    is $res->header('Location'), '/';
 };
 
 done_testing;

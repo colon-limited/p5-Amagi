@@ -58,12 +58,22 @@ sub dispatch {
     if ($@) {
         return $self->res_error(500, 'Internal Server Error : '. $@);
     }
-    Amagi::Response->as_json($res_data);
+    ref $res_data eq "Amagi::Response" ? $res_data->finalize : Amagi::Response->as_json($res_data);
 }
 
 sub res_error {
     my ($self, $status, $message) = @_;
     Amagi::Response->as_json({status => $status, message => $message});
+}
+
+sub redirect {
+    my ($self, $to) = @_;
+    Amagi::Response->new(307, ["Location" => $to], []);
+}
+
+sub redirect_permanently {
+    my ($self, $to) = @_;
+    Amagi::Response->new(308, ["Location" => $to], []);
 }
 
 sub add_component {
@@ -132,6 +142,15 @@ Return L<lt>Amagi::Response<gt> object that contains passed status code and mess
         my ($app, $req) = @_;
         return $app->res_error(400 => 'commit parameter is not defined') if !$req->param('commit');
         {message => 'ok'}
+    });
+
+=head2 redirect / redirect_permanently
+
+Return Amagi::Response object that contains Location header.
+
+    $amagi->get('/mv' => sub {
+        my ($app, $req) = @_;
+        return $app->redierct('/');
     });
 
 =head1 CONTROLLER LOGIC
