@@ -18,7 +18,12 @@ sub json_content {
         Carp::carp('Content-type is not matched to json. It is "'. $self->content_type .'"');
         return;
     }
-    $serializer->decode($self->content);
+    my $json = eval { $serializer->decode($self->content) };
+    if ($@) {
+        Carp::carp($@);
+        return;
+    }
+    return $json;
 }
 
 1;
