@@ -58,7 +58,10 @@ sub dispatch {
     if ($@) {
         return $self->res_error(500, 'Internal Server Error : '. $@);
     }
-    ref $res_data eq "Amagi::Response" ? $res_data->finalize : Amagi::Response->as_json($res_data);
+    ref $res_data eq "Amagi::Response" ? $res_data->finalize : 
+    ref $res_data eq "ARRAY"           ? $res_data :
+                                         Amagi::Response->as_json($res_data)
+    ;
 }
 
 sub res_error {
